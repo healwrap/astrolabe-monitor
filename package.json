@@ -1,0 +1,75 @@
+{
+  "name": "@healwrap/monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "clean": "run-s clean:build clean:caches",
+    "clean:build": "pnpm --filter @miaoma/* clean",
+    "clean:caches": " rimraf .turbo/cache **/*/.turbo",
+    "clean:deps": "rimraf node_modules **/*/node_modules",
+    "clean:all": "run-s clean:build clean:caches clean:deps",
+    "docker:start": "docker compose -f .devcontainer/docker-compose.yml up -d",
+    "docker:stop": "docker compose -f .devcontainer/docker-compose.yml down",
+    "docker:restart": "run-s docker:stop docker:start",
+    "docker:rm": "run-s docker:stop && docker compose -f .devcontainer/docker-compose.yml down --volumes --remove-orphans && rimraf .devcontainer/clickhouse_data .devcontainer/postgresql_data .devcontainer/redis_data",
+    "lint": "eslint",
+    "lint:staged": "lint-staged",
+    "spellcheck": "cspell lint --dot --gitignore --color --cache --show-suggestions \"(packages|apps)/**/*.@(html|js|cjs|mjs|ts|tsx|css|scss|md)\"",
+    "typecheck": "turbo typecheck",
+    "commit": "git-cz",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "devDependencies": {
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@eslint/js": "9.32.0",
+    "@sentry/browser": "^9.42.1",
+    "@types/node": "^22.16.5",
+    "commitizen": "4.3.1",
+    "cspell": "9.2.0",
+    "cz-git": "1.12.0",
+    "eslint": "9.32.0",
+    "eslint-plugin-prettier": "5.5.3",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "eslint-plugin-simple-import-sort": "12.1.1",
+    "fast-glob": "3.3.3",
+    "globals": "16.3.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.1.2",
+    "npm-run-all2": "8.0.4",
+    "prettier": "3.6.2",
+    "rimraf": "6.0.1",
+    "tsup": "8.5.0",
+    "turbo": "2.5.5",
+    "typescript-eslint": "8.38.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "lint-staged": {
+    "*.{md,json}": [
+      "prettier --cache --write --no-error-on-unmatched-pattern"
+    ],
+    "*.{css,less}": [
+      "prettier --cache --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --cache --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --cache --parser=typescript --write"
+    ]
+  }
+}

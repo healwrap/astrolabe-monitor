@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+  clickhouse:
+    image: bitnami/clickhouse:latest
+    container_name: healwrap-monitor-clickhouse
+    ports:
+      - '8123:8123'
+      - '9000:9000'
+    environment:
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=healwrap
+      - CLICKHOUSE_DATABASE=default
+    volumes:
+      - ./data/clickhouse:/bitnami/clickhouse
+
+  # kafka 配置待修改
+  # kafka:
+  #   image: bitnami/kafka:latest
+  #   container_name: healwrap-monitor-kafka
+  #   ports:
+  #     - '9092:9092'
+  #     - '9093:9093' 
+  #   environment:
+  #     - KAFKA_CFG_PROCESS_ROLES=broker,controller
+  #     - KAFKA_CFG_NODE_ID=1
+  #     - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@192.168.3.58:9093
+  #     - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://192.168.3.58:9092
+  #     # - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://healwrap-monitor-kafka:9092
+  #     - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+  #     - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+  #     - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+  #     - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+  #     - ALLOW_PLAINTEXT_LISTENER=yes
+  #   volumes:
+  #     - ./data/kafka:/bitnami/kafka/data
+
+  healwrap-monitor-postgresql:
+    image: bitnami/postgresql:latest
+    container_name: healwrap-monitor-postgresql
+    ports:
+      - '5432:5432'
+    # 修改环境变量需要删除容器重新生成容器 执行 docker:rm
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_PASSWORD=healwrap
+      - POSTGRESQL_DATABASE=postgres
+    volumes:
+      - ./data/postgresql:/bitnami/postgresql
+
+  healwrap-monitor-redis:
+    image: bitnami/redis:latest
+    container_name: healwrap-monitor-redis
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_PASSWORD=healwrap
+    volumes:
+      - ./data/redis:/bitnami/redis
