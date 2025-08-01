@@ -28,6 +28,9 @@
     "clean": "rimraf build",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@healwrap/monitor-sdk-core": "workspace:*"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -10,6 +10,8 @@ export default defineConfig([
     clean: true,
     minify: true,
     outDir: 'build/cjs',
+    // 强制统一输出文件扩展名为 .js
+    outExtension: () => ({ js: '.js' }),
   },
   {
     entry: ['src'],
@@ -20,5 +22,6 @@ export default defineConfig([
     clean: true,
     minify: true,
     outDir: 'build/esm',
+    outExtension: () => ({ js: '.js' }),
   },
 ]);

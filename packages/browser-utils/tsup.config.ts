@@ -10,6 +10,7 @@ export default defineConfig([
     clean: true,
     minify: true,
     outDir: 'build/cjs',
+    outExtension: () => ({ js: '.js' }),
   },
   {
     entry: ['src'],
@@ -20,5 +21,6 @@ export default defineConfig([
     clean: true,
     minify: true,
     outDir: 'build/esm',
+    outExtension: () => ({ js: '.js' }),
   },
 ]);

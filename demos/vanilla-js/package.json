@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@healwrap/monitor-sdk-core": "workspace:*"
+    "@healwrap/monitor-sdk-browser": "workspace:*",
+    "@sentry/browser": "^9.42.1",
+    "web-vitals": "^5.1.0"
   },
   "devDependencies": {
     "vite": "^7.0.4"
