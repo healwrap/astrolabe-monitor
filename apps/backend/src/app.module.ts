@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClickhouseModule } from './basement/clickhouse/clickhouse.module';
 import databaseConfig from './config/database';
 import { AdminModule } from './modules/admin/admin.module';
+import { ApplicationModule } from './modules/application/application.module';
 import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
@@ -30,6 +31,7 @@ import { AuthModule } from './modules/auth/auth.module';
     }),
     AuthModule,
     AdminModule,
+    ApplicationModule,
   ],
 })
 export class AppModule {}

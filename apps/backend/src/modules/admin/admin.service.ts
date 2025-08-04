@@ -31,6 +31,20 @@ export class AdminService {
   }
 
   /**
+   * 根据ID查找用户
+   */
+  async findById(id: number) {
+    const admin = await this.adminRepository.findOne({
+      where: { id },
+      select: ['id', 'username', 'email', 'phone', 'role'],
+    });
+    if (!admin) {
+      throw new UnauthorizedException('用户不存在');
+    }
+    return admin;
+  }
+
+  /**
    * 注册新用户
    */
   async register(payload: AdminRegisterDto) {

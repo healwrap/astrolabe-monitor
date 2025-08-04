@@ -16,10 +16,11 @@ export class AuthService {
     if (!admin) {
       throw new UnauthorizedException('用户名或密码错误');
     }
-    // 登录之后，jwt token 中的password改为hash
-    payload.password = admin.password;
+    // token 中包含用户名和用户ID
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...ctx } = admin;
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(ctx),
     };
   }
 }

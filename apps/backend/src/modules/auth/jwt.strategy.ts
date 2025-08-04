@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
+import { AdminEntity } from '../../entities/admin.entity';
 import { AdminService } from '../admin/admin.service';
 
 @Injectable()
@@ -12,13 +13,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private adminService: AdminService
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromHeader('token'),
+      // bearer token
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
       secretOrKey: configService.get<string>('JWT_SECRET') || '',
+      // passReqToCallback: true, // 将请求对象传递给回调
     });
   }
 
-  async validate(payload: any) {
-    return this.adminService.validateUser(payload.username, payload.password);
+  async validate(payload: Omit<AdminEntity, 'password'>) {
+    return await this.adminService.findById(payload.id);
   }
 }

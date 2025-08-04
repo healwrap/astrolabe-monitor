@@ -36,3 +36,5 @@ dist-ssr
 .devcontainer/clickhouse_data
 .devcontainer/redis_data
 .devcontainer/kafka_data
+
+*.sql
