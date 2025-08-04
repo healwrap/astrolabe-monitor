@@ -60,15 +60,10 @@ export class ApplicationController {
   @Put()
   @UsePipes(new ZodValidationPipe(updateApplicationSchema))
   async update(@Body() body: UpdateApplicationDto, @Request() req) {
-    const admin = new AdminEntity();
-    admin.id = req.user.id;
-    // 过滤掉 null 或 undefined 的字段
-    const filteredBody = Object.fromEntries(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      Object.entries(body).filter(([_, value]) => value !== null && value !== undefined)
-    );
-    const application = new ApplicationEntity(filteredBody);
-    return await this.applicationService.update({ ...application, user: admin });
+    return await this.applicationService.update({
+      ...body,
+      user: req.user,
+    });
   }
 
   @ApiOperation({

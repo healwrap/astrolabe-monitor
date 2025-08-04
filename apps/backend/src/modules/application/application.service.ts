@@ -17,7 +17,24 @@ export class ApplicationService {
   }
 
   async update(payload: UpdateApplicationDto) {
-    return await this.applicationRepository.update(payload, payload);
+    // 首先验证应用是否属于当前用户
+    const existingApp = await this.applicationRepository.findOne({
+      where: { appId: payload.appId, user: { id: payload.user.id } },
+    });
+
+    if (!existingApp) {
+      throw new NotFoundException('Application not found or access denied');
+    }
+
+    const result = await this.applicationRepository.update({ appId: payload.appId }, payload);
+
+    if (result.affected === 0) {
+      throw new NotFoundException('Application not found');
+    }
+
+    return await this.applicationRepository.findOne({
+      where: { appId: payload.appId },
+    });
   }
 
   async list(params: { userId: number }) {

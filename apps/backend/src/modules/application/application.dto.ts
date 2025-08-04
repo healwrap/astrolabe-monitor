@@ -12,7 +12,7 @@ export const createApplicationSchema = z
   .required();
 
 export const updateApplicationSchema = z.object({
-  id: z.number().describe('id'),
+  appId: z.string().describe('应用 ID'),
   type: z.enum(['vanilla', 'react', 'vue']).describe('应用类型'),
   name: z.string().describe('应用名称'),
   description: z.string().optional().describe('应用描述'),
