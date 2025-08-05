@@ -1,5 +1,5 @@
-import React, { lazy, Suspense } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import React, { lazy } from 'react';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { Layout } from '@/layout';
 
@@ -19,14 +19,43 @@ export const router: PickRouter<A> = createBrowserRouter([
         <Layout />
       </AuthRoute>
     ),
-    children: [],
+    children: [
+      {
+        path: 'projects',
+        element: React.createElement(lazy(() => import('@/views/Projects'))),
+      },
+      {
+        path: 'issues',
+        element: React.createElement(lazy(() => import('@/views/Issues'))),
+      },
+      {
+        path: 'performance',
+        element: React.createElement(lazy(() => import('@/views/Performance'))),
+      },
+      {
+        path: 'performance/summary',
+        element: React.createElement(lazy(() => import('@/views/PerformanceSummary'))),
+      },
+      {
+        path: 'dashboard',
+        element: React.createElement(lazy(() => import('@/views/Dashboard'))),
+      },
+      {
+        path: 'crons',
+        element: React.createElement(lazy(() => import('@/views/Corns'))),
+      },
+      {
+        path: 'alerts',
+        element: React.createElement(lazy(() => import('@/views/Alerts'))),
+      },
+      {
+        path: '/',
+        element: <Navigate to="/projects" replace />,
+      },
+    ],
   },
   {
     path: '/auth/login',
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        {React.createElement(lazy(() => import('@/views/Login').then(m => ({ default: m.Login }))))}
-      </Suspense>
-    ),
+    element: React.createElement(lazy(() => import('@/views/Login'))),
   },
 ]);

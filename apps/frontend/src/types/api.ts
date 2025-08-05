@@ -55,4 +55,5 @@ export interface ApplicationListRes {
 export interface CreateApplicationPayload {
   name: string;
   type: ApplicationType;
+  description: string;
 }
