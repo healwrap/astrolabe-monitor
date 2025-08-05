@@ -43,6 +43,7 @@ export class AuthService {
     const hash = crypto.createHash('md5').update(token).digest('hex');
     Logger.log(`JWT Token Hash: ${hash}`);
     // 有效的token
+    // TODO 重复登录 会一直生成 记录，可能存在问题
     await this.redis.set(`token:${hash}`, admin.id, 'EX', expiresInSeconds);
     return {
       access_token: token,

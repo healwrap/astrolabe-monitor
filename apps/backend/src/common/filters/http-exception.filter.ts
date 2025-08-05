@@ -21,7 +21,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
           : (exceptionResponse as any).message || 'Unknown error',
       data: null,
     };
-
-    response.status(status).json(errorResponse);
+    // TODO 始终返回 200 状态码
+    response.status(200).json(errorResponse);
   }
 }

@@ -1,4 +1,4 @@
-import { Transport } from '@healwrap/monitor-sdk-core';
+import { type Transport } from '@healwrap/monitor-sdk-core';
 
 import { onCLS, onFCP, onLCP, onTTFB } from '../metrics/web-vitals';
 // import { getBrowserInfo } from '../utils/index';

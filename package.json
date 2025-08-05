@@ -9,6 +9,11 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
+    "clean": "run-s clean:build clean:caches",
+    "clean:build": "pnpm --filter @healwrap/* clean",
+    "clean:caches": " rimraf .turbo/cache **/*/.turbo",
+    "clean:deps": "rimraf node_modules **/*/node_modules",
+    "clean:all": "run-s clean:build clean:caches clean:deps",
     "docker:start": "docker compose -f .devcontainer/docker-compose.yml up -d",
     "docker:stop": "docker compose -f .devcontainer/docker-compose.yml down",
     "docker:restart": "run-s docker:stop docker:start",
@@ -47,6 +52,7 @@
     "rimraf": "6.0.1",
     "tsup": "8.5.0",
     "turbo": "2.5.5",
+    "typescript": "5.5.3",
     "typescript-eslint": "8.38.0"
   },
   "config": {

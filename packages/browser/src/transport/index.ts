@@ -1,4 +1,4 @@
-import { Transport } from '@healwrap/monitor-sdk-core';
+import { type Transport } from '@healwrap/monitor-sdk-core';
 
 export class BrowserTransport implements Transport {
   constructor(private dsn: string) {}

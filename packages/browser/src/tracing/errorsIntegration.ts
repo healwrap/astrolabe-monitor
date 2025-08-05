@@ -10,14 +10,15 @@ export class ErrorsIntegration {
     this.transport = transport;
 
     // 捕获全局错误
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     window.onerror = (message, source, lineno, colno, error) => {
       this.transport.send({
         type: 'error',
         message: message,
-        source,
-        lineno,
-        colno,
-        error: error ? error.stack : undefined,
+        // source,
+        // lineno,
+        // colno,
+        // error: error ? error.stack : undefined,
         path: window.location.pathname,
       });
     };
