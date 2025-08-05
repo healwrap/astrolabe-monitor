@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { InjectRedis } from '@nestjs-modules/ioredis';
 import * as bcrypt from 'bcryptjs';
+import Redis from 'ioredis';
 import { Repository } from 'typeorm';
 
 import { AdminEntity } from '../../entities/admin.entity';
@@ -10,7 +12,8 @@ import { AdminRegisterDto } from './admin.dto';
 export class AdminService {
   constructor(
     @InjectRepository(AdminEntity)
-    private readonly adminRepository: Repository<AdminEntity>
+    private readonly adminRepository: Repository<AdminEntity>,
+    @InjectRedis() private readonly redis: Redis
   ) {}
 
   /**
