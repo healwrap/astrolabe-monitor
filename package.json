@@ -33,7 +33,6 @@
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
     "@eslint/js": "9.32.0",
-    "@sentry/browser": "^9.42.1",
     "@types/node": "^22.16.5",
     "commitizen": "4.3.1",
     "cspell": "9.2.0",

@@ -1,25 +1,21 @@
-import { Transport } from './transport';
-import { MonitoringOptions } from './types';
+import { Options } from './types';
 
 export class Monitoring {
-  private transport: Transport | null = null;
+  constructor(private options: Options) {}
 
-  constructor(private options: MonitoringOptions) {}
-
-  init(transport: Transport) {
-    this.transport = transport;
+  init() {
     this.options.integrations.forEach(integration => {
-      integration.init(transport);
+      integration.init(this.options);
     });
   }
 
   // 自定义上报消息
   reportMessage(message: string) {
-    this.transport?.send({ type: 'message', message });
+    this.options.transport?.send({ type: 'message', message });
   }
 
   // 自定义上报事件
   reportEvent(event: unknown) {
-    this.transport?.send({ type: 'event', event });
+    this.options.transport?.send({ type: 'event', event });
   }
 }

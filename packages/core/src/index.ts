@@ -1,7 +1,9 @@
 export { captureConsoleIntegration } from './integrations/captureConsoleIntegration';
 export type * from './integrations/captureConsoleIntegration';
 
-export { Integration } from './types';
+export { BaseIntegration } from './integrations/baseIntegration';
+
+export { type Options } from './types';
 
 export { type Transport } from './transport';
 

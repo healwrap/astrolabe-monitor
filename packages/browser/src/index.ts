@@ -1,20 +1,22 @@
-import { Integration, Monitoring } from '@healwrap/monitor-sdk-core';
+import { Monitoring, Options } from '@healwrap/monitor-sdk-core';
 
 export { browserTracingIntegration } from './tracing/browserTracingIntegration';
 export { ErrorsIntegration } from './tracing/errorsIntegration';
-
 import { BrowserTransport } from './transport';
-
+// TODO 导出 BrowserTransport，正常情况不应该导出，而是根据平台自行封装 Transport
+export { BrowserTransport } from './transport';
 export { MetricsIntegration } from '@healwrap/monitor-sdk-browser-utils';
+export type { IntegrationOptions } from './types';
 
-export function init(options: { dsn: string; integrations: Integration[] }) {
+export function init(options: Omit<Options, 'transport'>) {
+  const transport = new BrowserTransport(options.dsn);
   const monitoring = new Monitoring({
     dsn: options.dsn,
+    transport,
     integrations: options.integrations,
   });
 
-  const transport = new BrowserTransport(options.dsn);
-  monitoring.init(transport);
+  monitoring.init();
 
   return monitoring;
 }

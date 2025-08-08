@@ -1,5 +1,15 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld.vue';
+function triggerError() {
+  // // vue 触发报错
+  // // 触发 Vue 运行时错误
+  // const error = new Error('这是一个自定义错误');
+  // throw error;
+
+  // 触发 Vue 编译时错误
+  const obj: any = null;
+  console.log(obj.undefinedProperty);
+}
 </script>
 
 <template>
@@ -12,6 +22,7 @@ import HelloWorld from './components/HelloWorld.vue'
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />
+  <button @click="triggerError">触发报错</button>
 </template>
 
 <style scoped>

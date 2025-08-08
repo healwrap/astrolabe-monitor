@@ -1,17 +1,20 @@
-import { type Transport } from '@healwrap/monitor-sdk-core';
+import { BaseIntegration, Options } from '@healwrap/monitor-sdk-core';
 
 import { onCLS, onFCP, onLCP, onTTFB } from '../metrics/web-vitals';
+import { IntegrationOptions } from '../types';
 // import { getBrowserInfo } from '../utils/index';
 
 // TODO 单独发送
-export class MetricsIntegration {
-  constructor(private transport: Transport) {}
+export class MetricsIntegration extends BaseIntegration {
+  constructor(integrationOptions: IntegrationOptions = {}) {
+    super(integrationOptions);
+  }
 
-  init(transport: Transport) {
-    this.transport = transport;
+  protected setup(options: Options & IntegrationOptions) {
+    const { transport } = options;
     [onCLS, onLCP, onFCP, onTTFB].forEach(metricFn => {
       metricFn(metric => {
-        this.transport.send({
+        transport.send({
           type: 'webVital',
           name: metric.name,
           value: metric.value,

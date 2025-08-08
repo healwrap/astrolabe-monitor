@@ -15,5 +15,6 @@
     }
   },
   "ui": "tui",
-  "cacheDir": ".turbo/cache"
+  "cacheDir": ".turbo/cache",
+  "concurrency": "15"
 }

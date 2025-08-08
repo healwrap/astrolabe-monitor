@@ -1,31 +1,40 @@
-import { type Transport } from '@healwrap/monitor-sdk-core';
+import { BaseIntegration, Options } from '@healwrap/monitor-sdk-core';
+
+import { IntegrationOptions } from '../types';
 
 /**
- * 错误处理
+ * 错误处理集成
  */
-export class ErrorsIntegration {
-  constructor(private transport: Transport) {}
+export class ErrorsIntegration extends BaseIntegration {
+  constructor(integrationOptions: IntegrationOptions = {}) {
+    super(integrationOptions);
+  }
 
-  init(transport: Transport) {
-    this.transport = transport;
-
+  /**
+   * 设置方法
+   * 实现错误处理的具体逻辑
+   * @param options 合并后的选项
+   */
+  protected setup(options: Options & IntegrationOptions): void {
+    const { transport } = options;
     // 捕获全局错误
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     window.onerror = (message, source, lineno, colno, error) => {
-      this.transport.send({
+      transport.send({
         type: 'error',
         message: message,
-        // source,
-        // lineno,
-        // colno,
-        // error: error ? error.stack : undefined,
+        // 根据配置决定是否发送更多信息
+        source,
+        lineno,
+        colno,
+        stack: error ? error.stack : undefined,
         path: window.location.pathname,
       });
     };
 
     // 捕获未处理的 Promise reject
     window.onunhandledrejection = event => {
-      this.transport.send({
+      transport.send({
         type: 'unhandledrejection',
         message: event.reason,
         path: window.location.pathname,

@@ -1,5 +1,13 @@
 type TransportData = {
-  type: 'error' | 'unhandledrejection' | 'console' | 'webVital' | 'message' | 'event';
+  type:
+    | 'error'
+    | 'react-error'
+    | 'vue-error'
+    | 'unhandledrejection'
+    | 'console'
+    | 'webVital'
+    | 'message'
+    | 'event';
 } & Record<string, unknown>;
 /**
  * Transport interface
