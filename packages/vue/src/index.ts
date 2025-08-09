@@ -1,3 +1,5 @@
+export * from '@healwrap/monitor-sdk-browser';
+
 import { BrowserTransport } from '@healwrap/monitor-sdk-browser';
 import { Monitoring, Options } from '@healwrap/monitor-sdk-core';
 
