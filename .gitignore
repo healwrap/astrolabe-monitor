@@ -38,3 +38,5 @@ dist-ssr
 .devcontainer/kafka_data
 
 *.sql
+
+docker-compose.deploy.yml
